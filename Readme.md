@@ -1,7 +1,7 @@
 # Личный проект «Киноман» [![Build status][travis-image]][travis-url]
 
 * Студент: [Elena Katasonova](https://up.htmlacademy.ru/ecmascript/10/user/579401).
-* Наставник: `Неизвестно`.
+* Наставник: [Oleg Petrov](https://htmlacademy.ru/profile/fyvfyv).
 
 ---
 
