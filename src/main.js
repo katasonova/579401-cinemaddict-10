@@ -152,17 +152,17 @@ const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
 
-const headerElement = document.querySelector('.header');
-const mainElement = document.querySelector('.main');
+const headerElement = document.querySelector(`.header`);
+const mainElement = document.querySelector(`.main`);
 
 render(headerElement, renderUserLevel());
 render(mainElement, renderMenu());
 render(mainElement, renderMoviesContainer());
-const moviesContainerElement = mainElement.querySelector('.films-list__container');
+const moviesContainerElement = mainElement.querySelector(`.films-list__container`);
 
 for (let i = 0; i < MOVIES_COUNT; i++) {
-  render(moviesContainerElement, renderMovieCard())
-};
+  render(moviesContainerElement, renderMovieCard());
+}
 
 render(mainElement, renderSnowMoreButton());
 render(mainElement, renderExtraMovieDetails());
