@@ -1,5 +1,6 @@
 import {renderUserLevel} from './components/user-level'
 import {renderMenu} from './components/menu'
+import {generateMovieCard} from './mock/movie-card'
 import {renderMovieCard} from './components/movie-card'
 import {renderSnowMoreButton} from './components/show-more-button'
 import {renderExtraMovieDetails} from './components/extra-movie-details'
@@ -30,9 +31,11 @@ render(mainElement, renderMenu());
 render(mainElement, renderMoviesContainer());
 const moviesContainerElement = mainElement.querySelector(`.films-list__container`);
 
-for (let i = 0; i < MOVIES_COUNT; i++) {
-  render(moviesContainerElement, renderMovieCard());
-}
+const card = generateMovieCard();
+console.log(card)
+// for (let i = 0; i < MOVIES_COUNT; i++) {
+  render(moviesContainerElement, renderMovieCard(card));
+// }
 
 render(mainElement, renderSnowMoreButton());
 //render(mainElement, renderExtraMovieDetails());

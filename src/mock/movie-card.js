@@ -53,9 +53,9 @@ const Posters = [
   `./images/posters/the-man-with-the-golden-arm.jpg`
 ];
 
-const getRandomInteger = (min, max) => min - 0.5 + Math.random() * (max - min + 1);
+const getRandomInteger = (min, max) => Math.ceil(min - 0.5 + Math.random() * (max - min + 1));
 
-const getRandomArrayElement = (array) => array[Math.floor(Math.rsandom() * array.length)];
+const getRandomArrayElement = (array) => array[Math.floor(Math.random() * array.length)];
 
 const getRandomRating = () => (Math.random() * MAX_RATING).toFixed(1);
 
@@ -78,7 +78,7 @@ const generateMovieCard = () => {
     genre: getRandomArrayElement(Genre),
     poster: getRandomArrayElement(Posters),
     description: getRandomDescription(DESCRIPTION),
-    comments: `${getRandomInteger(Comments.MIN, Comments.MAX)} comments`,
+    comments: getRandomInteger(Comments.MIN, Comments.MAX),
     isFavourite: getRandomBoolean(),
     isWatched: getRandomBoolean(),
     isInWatchlist: getRandomBoolean()
