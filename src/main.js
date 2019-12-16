@@ -35,4 +35,4 @@ for (let i = 0; i < MOVIES_COUNT; i++) {
 }
 
 render(mainElement, renderSnowMoreButton());
-render(mainElement, renderExtraMovieDetails());
+//render(mainElement, renderExtraMovieDetails());
