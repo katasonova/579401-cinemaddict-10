@@ -5,9 +5,10 @@ import {generateMenu} from './mock/menu'
 import {renderMovieCard} from './components/movie-card'
 import {renderSnowMoreButton} from './components/show-more-button'
 import {renderMovieList} from './components/extra-movie-list'
-import {renderExtraMovieDetails} from './components/extra-movie-details'
 
-const MOVIES_COUNT = 5;
+const MOVIES_NUMBER = 14;
+const INITIAL_MOVIES_NUMBER = 5;
+const MOVIES_TO_LOAD_MORE = 5;
 
 const renderMoviesContainer = () => {
   return (
@@ -21,7 +22,6 @@ const renderMoviesContainer = () => {
   );
 };
 
-
 const render = (container, template, place = `beforeend`) => {
   container.insertAdjacentHTML(place, template);
 };
@@ -29,14 +29,16 @@ const render = (container, template, place = `beforeend`) => {
 const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
 
-const cards = generateMoviesCards(MOVIES_COUNT);
+const cards = generateMoviesCards(MOVIES_NUMBER);
 const filters = generateMenu(cards);
 render(headerElement, renderUserLevel());
 render(mainElement, renderMenu(filters));
 render(mainElement, renderMoviesContainer());
 const moviesContainerElement = mainElement.querySelector(`.films-list__container`);
 
-cards.forEach(card => render(moviesContainerElement, renderMovieCard(card)));
+let presentMoviesNumber = INITIAL_MOVIES_NUMBER;
+cards.slice(0, presentMoviesNumber).forEach(card => render(moviesContainerElement, renderMovieCard(card)));
+
 
 const moviesListSection = mainElement.querySelector(`.films-list`);
 render(moviesListSection, renderSnowMoreButton());
@@ -62,5 +64,17 @@ const movieLists = mainElement.querySelectorAll(`.films-list--extra .films-list_
 topRatedMovies.forEach(card => render(movieLists[0], renderMovieCard(card)));
 topCommentedMovies.forEach(card => render(movieLists[1], renderMovieCard(card)));
 
-//render(mainElement, renderExtraMovieDetails(cards[0]));
+const loadMoreButton = mainElement.querySelector(`.films-list__show-more`);
+loadMoreButton.addEventListener(`click`, () => {
+  const renderedMovies = presentMoviesNumber;
+  presentMoviesNumber += MOVIES_TO_LOAD_MORE;
+
+  cards.slice(renderedMovies, presentMoviesNumber).forEach(card => render(moviesContainerElement, renderMovieCard(card)));
+
+  if (presentMoviesNumber >= cards.length) {
+    loadMoreButton.remove();
+  }
+});
+
+render(mainElement, renderExtraMovieDetails(cards[0]));
 
