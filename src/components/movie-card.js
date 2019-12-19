@@ -1,6 +1,6 @@
 const isPropertyActive = (property) => {
   return property ? `film-card__controls-item--active` : ``;
-}
+};
 
 export const renderMovieCard = (card) => {
   return (
