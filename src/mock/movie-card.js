@@ -43,12 +43,12 @@ const MovieDuration = {
   }
 };
 
-const Months = [`January`,`February`,`March`,`April`,`May`,`June`,`July`,`August`,`September`,`October`,`November`,`December`];
+const Months = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`];
 
 const Days = {
   MIN: 1,
   MAX: 28
-}
+};
 
 const Genre = [`Action`, `Adventure`, `Comedy`, `Crime`, `Drama`, `Fantasy`, `Historical`, `Thriller`];
 
@@ -103,11 +103,10 @@ const getRandomBoolean = () => Math.random() >= 0.5;
 
 const getMovieTitle = () => getRandomArrayElement(Title);
 const getYear = () => getRandomInteger(Year.MIN, Year.MAX);
-const getGenre = () => getRandomArrayElement(Genre);
 
 const getRandomArrayElements = (array, numberOfElements) => array.filter(() => Math.random() > 0.5).slice(0, numberOfElements);
 
-const generateDate = (day, monthsArray) => `${getRandomInteger(day.MIN, day.MAX)} ${getRandomArrayElement(monthsArray)} ${getYear()}`
+const generateDate = (day, monthsArray) => `${getRandomInteger(day.MIN, day.MAX)} ${getRandomArrayElement(monthsArray)} ${getYear()}`;
 
 const generateGenres = () => Array.from(new Set(getRandomArrayElements(Genre, getRandomInteger(0, 3))));
 
