@@ -1,7 +1,4 @@
 const renderGenres = (genres) => {
-  if (typeof genres === `string`) {
-    return `<span class="film-details__genre">${genres}</span>`;
-  }
   return Array.from(genres).map((el) => {
     return (
       `<span class="film-details__genre">${el}</span>`

@@ -1,10 +1,10 @@
-import {getRandomInteger} from '../utils';
+import {getRandomInteger, getRandomBoolean} from '../utils';
 
 const MAX_RATING = 10;
 const DESCRIPTION = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras aliquet varius magna, non porta ligula feugiat eget. Fusce tristique felis at fermentum pharetra. Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante. Phasellus eros mauris, condimentum sed nibh vitae, sodales efficitur ipsum. Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui. Sed sed nisi sed augue convallis suscipit in sed felis. Aliquam erat volutpat. Nunc fermentum tortor ac porta dapibus. In rutrum ac purus sit amet tempus.`;
 const MAX_SENTENCES = 3;
 
-const Title = [
+const titles = [
   `The Shawshank Redemption`,
   `Fight Club`,
   `The Godfather`,
@@ -43,16 +43,16 @@ const MovieDuration = {
   }
 };
 
-const Months = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`];
+const months = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`];
 
 const Days = {
   MIN: 1,
   MAX: 28
 };
 
-const Genre = [`Action`, `Adventure`, `Comedy`, `Crime`, `Drama`, `Fantasy`, `Historical`, `Thriller`];
+const genres = [`Action`, `Adventure`, `Comedy`, `Crime`, `Drama`, `Fantasy`, `Historical`, `Thriller`];
 
-const Posters = [
+const posters = [
   `./images/posters/made-for-each-other.png`,
   `./images/posters/popeye-meets-sinbad.png`,
   `./images/posters/sagebrush-trail.jpg`,
@@ -62,7 +62,7 @@ const Posters = [
   `./images/posters/the-man-with-the-golden-arm.jpg`
 ];
 
-const Names = [
+const names = [
   `Anthony Mann`,
   `Anne Wigton`,
   `Heinz Herald`,
@@ -78,7 +78,7 @@ const Names = [
   `Jeremy Irons`
 ];
 
-const Countries = [
+const countries = [
   `USA`,
   `Canada`,
   `United Kingdom`,
@@ -92,23 +92,21 @@ const getRandomArrayElement = (array) => array[Math.floor(Math.random() * array.
 const getRandomRating = () => (Math.random() * MAX_RATING).toFixed(1);
 
 const getRandomDescription = (string) => {
-  return string.split(`.`).filter(() => Math.random() > 0.5).slice(0, Math.ceil(Math.random() * MAX_SENTENCES)).join(`.`);
+  return string.split(`.`).filter(() => getRandomBoolean()).slice(0, Math.ceil(Math.random() * MAX_SENTENCES)).join(`.`);
 };
 
 const getMovieDuration = () => {
   return `${getRandomInteger(MovieDuration.HOURS.MIN, MovieDuration.HOURS.MAX)}h ${getRandomInteger(MovieDuration.MIN.MIN, MovieDuration.MIN.MAX)}m`;
 };
 
-const getRandomBoolean = () => Math.random() >= 0.5;
-
-const getMovieTitle = () => getRandomArrayElement(Title);
+const getMovieTitle = () => getRandomArrayElement(titles);
 const getYear = () => getRandomInteger(Year.MIN, Year.MAX);
 
-const getRandomArrayElements = (array, numberOfElements) => array.filter(() => Math.random() > 0.5).slice(0, numberOfElements);
+const getRandomArrayElements = (array, numberOfElements) => array.filter(() => getRandomBoolean()).slice(0, numberOfElements);
 
 const generateDate = (day, monthsArray) => `${getRandomInteger(day.MIN, day.MAX)} ${getRandomArrayElement(monthsArray)} ${getYear()}`;
 
-const generateGenres = () => Array.from(new Set(getRandomArrayElements(Genre, getRandomInteger(0, 3))));
+const generateGenres = () => Array.from(new Set(getRandomArrayElements(genres, getRandomInteger(1, 3))));
 
 const generateMovieCard = () => {
   return {
@@ -117,18 +115,18 @@ const generateMovieCard = () => {
     year: getYear(),
     duration: getMovieDuration(),
     genre: getRandomArrayElement(generateGenres()),
-    poster: getRandomArrayElement(Posters),
+    poster: getRandomArrayElement(posters),
     description: getRandomDescription(DESCRIPTION),
     comments: getRandomInteger(Comments.MIN, Comments.MAX),
     isFavourite: getRandomBoolean(),
     isWatched: getRandomBoolean(),
     isInWatchlist: getRandomBoolean(),
     // extra
-    director: getRandomArrayElements(Names, 1),
-    writers: Array.from(new Set(getRandomArrayElements(Names, getRandomInteger(1, 3)))).join(`, `),
-    actors: Array.from(new Set(getRandomArrayElements(Names, getRandomInteger(1, 3)))).join(`, `),
-    releaseDate: generateDate(Days, Months),
-    country: Array.from(new Set(getRandomArrayElements(Countries, getRandomInteger(1, 3)))).join(`, `),
+    director: getRandomArrayElements(names, 1),
+    writers: Array.from(new Set(getRandomArrayElements(names, getRandomInteger(1, 3)))).join(`, `),
+    actors: Array.from(new Set(getRandomArrayElements(names, getRandomInteger(1, 3)))).join(`, `),
+    releaseDate: generateDate(Days, months),
+    country: Array.from(new Set(getRandomArrayElements(countries, getRandomInteger(1, 3)))).join(`, `),
     genres: generateGenres(),
     isAdultMovie: getRandomBoolean(),
   };

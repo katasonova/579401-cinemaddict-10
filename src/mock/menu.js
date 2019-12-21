@@ -1,21 +1,8 @@
+const getWatchlistNumber = (cards) => cards.filter((card) => card.isInWatchlist).length;
 
-const getWatchlistNumber = (cards) => {
-  let number = 0;
-  cards.forEach((card) => card.isInWatchlist ? number++ : number);
-  return number;
-};
+const getHistoryNumber = (cards) => cards.filter((card) => card.isWatched).length;
 
-const getHistoryNumber = (cards) => {
-  let number = 0;
-  cards.forEach((card) => card.isWatched ? number++ : number);
-  return number;
-};
-
-const getFavouritesNumber = (cards) => {
-  let number = 0;
-  cards.forEach((card) => card.isFavourite ? number++ : number);
-  return number;
-};
+const getFavouritesNumber = (cards) => cards.filter((card) => card.isFavourite).length;
 
 const generateMenu = (cards) => {
   return {

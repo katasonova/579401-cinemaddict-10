@@ -5,6 +5,7 @@ import {generateMenu} from './mock/menu'
 import {renderMovieCard} from './components/movie-card'
 import {renderSnowMoreButton} from './components/show-more-button'
 import {renderMovieList} from './components/extra-movie-list'
+import {renderExtraMovieDetails} from './components/extra-movie-details'
 
 const MOVIES_NUMBER = 14;
 const INITIAL_MOVIES_NUMBER = 5;
@@ -76,5 +77,4 @@ loadMoreButton.addEventListener(`click`, () => {
   }
 });
 
-render(mainElement, renderExtraMovieDetails(cards[0]));
-
+//render(mainElement, renderExtraMovieDetails(cards[0]));
