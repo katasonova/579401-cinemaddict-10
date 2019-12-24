@@ -1,6 +1,7 @@
 import {generateUserLevel} from '../mock/user-level';
+import {createElement} from '../utils';
 
-export const renderUserLevel = () => {
+const createUserLevelTemplate = () => {
   return (
     `<section class="header__profile profile">
     <p class="profile__rating">${generateUserLevel()}</p>
@@ -8,3 +9,24 @@ export const renderUserLevel = () => {
   </section>`
   );
 };
+
+export default class UserLevel {
+  constructor() {
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createUserLevelTemplate();
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
