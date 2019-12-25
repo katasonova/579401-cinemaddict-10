@@ -2,4 +2,10 @@ const getRandomInteger = (min, max) => Math.ceil(min - 0.5 + Math.random() * (ma
 
 const getRandomBoolean = () => Math.random() > 0.5;
 
-export {getRandomInteger, getRandomBoolean}
+const createElement = (template) => {
+  const newElement = document.createElement(`div`);
+  newElement.innerHTML = template;
+  return newElement.firstChild;
+};
+
+export {getRandomInteger, getRandomBoolean, createElement}

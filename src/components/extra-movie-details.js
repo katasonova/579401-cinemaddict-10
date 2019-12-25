@@ -1,3 +1,5 @@
+import {createElement} from '../utils';
+
 const renderGenres = (genres) => {
   return Array.from(genres).map((el) => {
     return (
@@ -6,7 +8,7 @@ const renderGenres = (genres) => {
   }).join(``);
 };
 
-export const renderExtraMovieDetails = (card) => {
+const createExtraMovieDetailsTemplate = (card) => {
   return (
     `<section class="film-details">
     <form class="film-details__inner" action="" method="get">
@@ -76,3 +78,25 @@ export const renderExtraMovieDetails = (card) => {
   </section>`
   );
 };
+
+export default class ExtraMovieDetails {
+  constructor(card) {
+    this._card = card;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createExtraMovieDetailsTemplate(this._card);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

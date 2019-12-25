@@ -1,8 +1,10 @@
+import {createElement} from '../utils';
+
 const isPropertyActive = (property) => {
   return property ? `film-card__controls-item--active` : ``;
 };
 
-export const renderMovieCard = (card) => {
+const createMovieCardTemplate = (card) => {
   return (
     `<article class="film-card">
     <h3 class="film-card__title">${card.title}</h3>
@@ -23,3 +25,25 @@ export const renderMovieCard = (card) => {
   </article>`
   );
 };
+
+export default class Card {
+  constructor(card) {
+    this._card = card;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createMovieCardTemplate(this._card);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
