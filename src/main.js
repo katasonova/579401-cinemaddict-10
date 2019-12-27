@@ -39,6 +39,13 @@ const openMovieCardPopupHander = (openedCard) => {
   render(mainElement, openedCard.getElement());
 };
 
+const closeMovieCardPopupHandler = (evt, element) => {
+  if (evt.key === `Escape` || evt.key === `Esc`) {
+    element.getElement().remove();
+    document.removeEventListener(`keydown`, closeMovieCardPopupHandler);
+  }
+};
+
 const renderCard = (container, card) => {
   const cardItem = new Card(card);
   const cardItemWithExtraDetails = new ExtraMovieDetails(card);
@@ -49,14 +56,17 @@ const renderCard = (container, card) => {
 
   cardTitle.addEventListener(`click`, () => {
     openMovieCardPopupHander(cardItemWithExtraDetails);
+    document.addEventListener(`keydown`, (evt) => closeMovieCardPopupHandler(evt, cardItemWithExtraDetails));
   });
 
   cardPoster.addEventListener(`click`, () => {
     openMovieCardPopupHander(cardItemWithExtraDetails);
+    document.addEventListener(`keydown`, (evt) => closeMovieCardPopupHandler(evt, cardItemWithExtraDetails));
   });
 
   cardComments.addEventListener(`click`, () => {
     openMovieCardPopupHander(cardItemWithExtraDetails);
+    document.addEventListener(`keydown`, (evt) => closeMovieCardPopupHandler(evt, cardItemWithExtraDetails));
   });
 
   const closeCardPopupButton = cardItemWithExtraDetails.getElement().querySelector(`.film-details__close-btn`);
@@ -68,7 +78,6 @@ const renderCard = (container, card) => {
 }
 
 cards.slice(0, presentMoviesNumber).forEach(card => renderCard(moviesContainerElement, card));
-
 
 const moviesListSection = mainElement.querySelector(`.films-list`);
 render(moviesListSection, new SnowMoreButton().getElement());
