@@ -1,3 +1,4 @@
+import {render} from './utils/render'
 import UserLevel from './components/user-level'
 import Menu from './components/menu'
 import MoviesContainer from './components/movies-container'
@@ -13,17 +14,6 @@ import ExtraMovieDetails from './components/extra-movie-details'
 const MOVIES_NUMBER = 14;
 const INITIAL_MOVIES_NUMBER = 5;
 const MOVIES_TO_LOAD_MORE = 5;
-
-const render = (container, node, place = `beforeend`) => {
-  switch (place) {
-    case `afterbegin`:
-      container.prepend(node);
-      break;
-    case `beforeend`:
-      container.append(node);
-      break;
-  }
-};
 
 const headerElement = document.querySelector(`.header`);
 const mainElement = document.querySelector(`.main`);
@@ -50,21 +40,17 @@ const renderCard = (container, card) => {
   const cardItem = new Card(card);
   const cardItemWithExtraDetails = new ExtraMovieDetails(card);
 
-  const cardTitle = cardItem.getElement().querySelector(`.film-card__title`);
-  const cardPoster = cardItem.getElement().querySelector(`.film-card__poster`);
-  const cardComments = cardItem.getElement().querySelector(`.film-card__comments`);
-
-  cardTitle.addEventListener(`click`, () => {
+  cardItem.setCardTitleClickHandler(() => {
     openMovieCardPopupHander(cardItemWithExtraDetails);
     document.addEventListener(`keydown`, (evt) => closeMovieCardPopupHandler(evt, cardItemWithExtraDetails));
   });
 
-  cardPoster.addEventListener(`click`, () => {
+  cardItem.setCardPosterClickHandler(() => {
     openMovieCardPopupHander(cardItemWithExtraDetails);
     document.addEventListener(`keydown`, (evt) => closeMovieCardPopupHandler(evt, cardItemWithExtraDetails));
   });
 
-  cardComments.addEventListener(`click`, () => {
+  cardItem.setCardCommentsClickHandler(() => {
     openMovieCardPopupHander(cardItemWithExtraDetails);
     document.addEventListener(`keydown`, (evt) => closeMovieCardPopupHandler(evt, cardItemWithExtraDetails));
   });
@@ -87,8 +73,9 @@ if (cards.length === 0) {
 
   cards.slice(0, INITIAL_MOVIES_NUMBER).forEach(card => renderCard(moviesContainerElement, card));
 
+  const showMoreButton = new SnowMoreButton();
   const moviesListSection = mainElement.querySelector(`.films-list`);
-  render(moviesListSection, new SnowMoreButton().getElement());
+  render(moviesListSection, showMoreButton.getElement());
 
   const moviesExtraList = mainElement.querySelector(`.films`);
   render(moviesExtraList, new MovieList(`Top Rated`).getElement());
@@ -111,15 +98,14 @@ if (cards.length === 0) {
   topRatedMovies.forEach(card => renderCard(movieLists[0], card));
   topCommentedMovies.forEach(card => renderCard(movieLists[1], card));
 
-  const loadMoreButton = mainElement.querySelector(`.films-list__show-more`);
-  loadMoreButton.addEventListener(`click`, () => {
+  showMoreButton.setShowMoreClickButtonHandler(() => {
   const renderedMovies = presentMoviesNumber;
   presentMoviesNumber += MOVIES_TO_LOAD_MORE;
 
   cards.slice(renderedMovies, presentMoviesNumber).forEach(card => renderCard(moviesContainerElement, card));
 
   if (presentMoviesNumber >= cards.length) {
-    loadMoreButton.remove();
+    showMoreButton.getElement().remove();
   }
   });
 };

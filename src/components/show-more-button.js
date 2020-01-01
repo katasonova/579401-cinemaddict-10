@@ -10,4 +10,8 @@ export default class SnowMoreButton extends AbstractComponent {
   getTemplate() {
     return createSnowMoreButtonTemplate();
   }
+
+  setShowMoreClickButtonHandler(handler) {
+    this.getElement().addEventListener(`click`, handler);
+  }
 }
