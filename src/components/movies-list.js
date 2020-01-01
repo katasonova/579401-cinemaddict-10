@@ -10,7 +10,7 @@ const createMoviesListTemplate = () => {
   );
 };
 
-export default class MoviesList extends AbstractComponent{
+export default class MoviesList extends AbstractComponent {
   getTemplate() {
     return createMoviesListTemplate();
   }

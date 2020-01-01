@@ -8,4 +8,4 @@ const createElement = (template) => {
   return newElement.firstChild;
 };
 
-export {getRandomInteger, getRandomBoolean, createElement}
+export {getRandomInteger, getRandomBoolean, createElement};
