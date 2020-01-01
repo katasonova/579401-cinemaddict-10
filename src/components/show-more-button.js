@@ -1,4 +1,4 @@
-import {createElement} from '../utils';
+import AbstractComponent from './abstract';
 
 const createSnowMoreButtonTemplate = () => {
   return (
@@ -6,23 +6,8 @@ const createSnowMoreButtonTemplate = () => {
   );
 };
 
-export default class SnowMoreButton {
-  constructor() {
-    this._element = null;
-  }
-
+export default class SnowMoreButton extends AbstractComponent {
   getTemplate() {
     return createSnowMoreButtonTemplate();
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }

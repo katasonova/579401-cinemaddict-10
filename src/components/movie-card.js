@@ -1,4 +1,4 @@
-import {createElement} from '../utils';
+import AbstractComponent from './abstract';
 
 const isPropertyActive = (property) => {
   return property ? `film-card__controls-item--active` : ``;
@@ -26,24 +26,13 @@ const createMovieCardTemplate = (card) => {
   );
 };
 
-export default class Card {
+export default class Card extends AbstractComponent {
   constructor(card) {
+    super();
     this._card = card;
-    this._element = null;
   }
 
   getTemplate() {
     return createMovieCardTemplate(this._card);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
