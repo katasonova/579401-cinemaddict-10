@@ -1,4 +1,5 @@
 import {render} from '../utils/render';
+import {isEscWasPressed} from '../utils/common';
 import MoviesList from '../components/movies-list';
 import NoMovies from '../components/no-movies';
 import Card from '../components/movie-card';
@@ -14,14 +15,15 @@ const renderCard = (container, card) => {
   const cardItemWithExtraDetails = new ExtraMovieDetails(card);
 
   const openMovieCardPopupHander = (openedCard) => {
-    render(container, openedCard.getElement());
+    render(document.querySelector(`body`), openedCard.getElement());
   };
 
   const closeMovieCardPopupHandler = (evt, element) => {
-    if (evt.key === `Escape` || evt.key === `Esc`) {
+    isEscWasPressed(evt, () => {
       element.getElement().remove();
+      element.removeElement();
       document.removeEventListener(`keydown`, closeMovieCardPopupHandler);
-    }
+    });
   };
 
   cardItem.setCardTitleClickHandler(() => {
@@ -57,7 +59,7 @@ export default class PageController {
 
   render(cards) {
     const container = this._container.getElement();
-    if (cards.length === 0) {
+    if (!cards.length) {
       render(container, this._noMovies.getElement());
       return;
     }

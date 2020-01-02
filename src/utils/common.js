@@ -8,4 +8,10 @@ const createElement = (template) => {
   return newElement.firstChild;
 };
 
-export {getRandomInteger, getRandomBoolean, createElement};
+const isEscWasPressed = (evt, escPressHandler) => {
+  if (evt.key === `Escape` || evt.key === `Esc`) {
+    escPressHandler();
+  }
+};
+
+export {getRandomInteger, getRandomBoolean, createElement, isEscWasPressed};
