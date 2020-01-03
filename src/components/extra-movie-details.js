@@ -1,4 +1,4 @@
-import {createElement} from '../utils';
+import AbstractComponent from './abstract';
 
 const renderGenres = (genres) => {
   return Array.from(genres).map((el) => {
@@ -79,24 +79,13 @@ const createExtraMovieDetailsTemplate = (card) => {
   );
 };
 
-export default class ExtraMovieDetails {
+export default class ExtraMovieDetails extends AbstractComponent {
   constructor(card) {
+    super();
     this._card = card;
-    this._element = null;
   }
 
   getTemplate() {
     return createExtraMovieDetailsTemplate(this._card);
-  }
-
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
   }
 }
