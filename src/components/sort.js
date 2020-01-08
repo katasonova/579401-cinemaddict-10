@@ -35,11 +35,12 @@ export default class Sort extends AbstractComponent {
       });
 
       const selectedSortingType = evt.target.dataset.sortingType;
-      evt.target.classList.add(`sort__button--active`);
 
       if (this._currenSortingType === selectedSortingType) {
         return;
       }
+
+      evt.target.classList.add(`sort__button--active`);
 
       this._currenSortingType = selectedSortingType;
       handler(this._currenSortingType);
