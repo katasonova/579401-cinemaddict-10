@@ -165,18 +165,18 @@ export default class ExtraMovieDetails extends AbstractSmartComponent {
     const element = this.getElement();
 
     element.querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, () => {
-        this._isInWatchlist = !this._isInWatchlist;
-        this.rerender();
+      this._isInWatchlist = !this._isInWatchlist;
+      this.rerender();
     });
 
     element.querySelector(`.film-details__control-label--watched`).addEventListener(`click`, () => {
-        this._isWatched = !this._isWatched;
-        this.rerender();
+      this._isWatched = !this._isWatched;
+      this.rerender();
     });
 
-      element.querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, () => {
-        this._isWatched = !this._isWatched;
-        this.rerender();
+    element.querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, () => {
+      this._isWatched = !this._isWatched;
+      this.rerender();
     });
   }
 
