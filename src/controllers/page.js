@@ -18,11 +18,24 @@ export default class PageController {
     this._noMovies = new NoMovies();
     this._showMoreButton = new SnowMoreButton();
     this._showedMovieControllers = [];
+    this._cards = [];
+  }
+
+  _onDataChange(movieController, oldCard, newChangedDataCard) {
+    const index = this._cards.findIndex((el) => el === oldCard);
+
+    if (index === -1) {
+      return;
+    }
+
+    this._cards = [].concat(this._cards.slice(0, index), newChangedDataCard, this._cards.slice(index + 1));
+
+    movieController.render(this._cards[index]);
   }
 
   renderCards(container, array) {
     return array.map((card) => {
-      const movieController = new MovieController(container);
+      const movieController = new MovieController(container, this._onDataChange);
       movieController.renderCard(card);
       return movieController;
     });
@@ -41,29 +54,29 @@ export default class PageController {
 
     const moviesContainerElement = container.querySelector(`.films-list__container`);
 
-    let sortedCards = cards;
+    this._cards = cards;
     const sortHandler = (type) => {
       moviesContainerElement.innerHTML = ``;
 
       switch (type) {
         case SortingType.DATE:
-          sortedCards = cards.slice().sort((a, b) => b.year - a.year);
+          this._cards = cards.slice().sort((a, b) => b.year - a.year);
           break;
         case SortingType.RATING:
-          sortedCards = cards.slice().sort((a, b) => b.rating - a.rating);
+          this._cards = cards.slice().sort((a, b) => b.rating - a.rating);
           break;
         case SortingType.DEFAULT:
-          sortedCards = cards.slice();
+          this._cards = cards.slice();
           break;
       }
-      const newCards = this.renderCards(moviesContainerElement, sortedCards.slice(0, INITIAL_MOVIES_NUMBER));
+      const newCards = this.renderCards(moviesContainerElement, this._cards.slice(0, INITIAL_MOVIES_NUMBER));
       this._showedMovieControllers = this._showedMovieControllers.concat(newCards);
 
       render(moviesListSection, this._showMoreButton.getElement());
     };
     this._sort.setSortingTypeClickHandler(sortHandler);
 
-    this.renderCards(moviesContainerElement, sortedCards.slice(0, INITIAL_MOVIES_NUMBER));
+    this._showedMovieControllers.concat(this.renderCards(moviesContainerElement, this._cards.slice(0, INITIAL_MOVIES_NUMBER)));
 
     const moviesListSection = container.querySelector(`.films-list`);
     render(moviesListSection, this._showMoreButton.getElement());
@@ -72,17 +85,17 @@ export default class PageController {
     render(container, new MovieList(`Most Commented`).getElement());
 
     const getTopRatedMovies = () => {
-      const sortedCardsByRating = cards.slice().sort((a, b) => b.rating - a.rating);
+      const sortedCardsByRating = this._cards.slice().sort((a, b) => b.rating - a.rating);
       return sortedCardsByRating.slice(0, 2);
     };
 
     const getTopCommentedMovies = () => {
-      const sortedCardsByComments = cards.slice().sort((a, b) => b.comments - a.comments);
+      const sortedCardsByComments = this._cards.slice().sort((a, b) => b.comments - a.comments);
       return sortedCardsByComments.slice(0, 2);
     };
 
-    const topRatedMovies = getTopRatedMovies(cards);
-    const topCommentedMovies = getTopCommentedMovies(cards);
+    const topRatedMovies = getTopRatedMovies(this._cards);
+    const topCommentedMovies = getTopCommentedMovies(this._cards);
 
     const movieLists = container.querySelectorAll(`.films-list--extra .films-list__container`);
     this.renderCards(movieLists[0], topRatedMovies);
@@ -93,11 +106,11 @@ export default class PageController {
       const renderedMovies = presentMoviesNumber;
       presentMoviesNumber += MOVIES_TO_LOAD_MORE;
 
-      const newCards = this.renderCards(moviesContainerElement, sortedCards.slice(renderedMovies, presentMoviesNumber));
+      const newCards = this.renderCards(moviesContainerElement, this._cards.slice(renderedMovies, presentMoviesNumber));
       this._showedMovieControllers = this._showedMovieControllers.concat(newCards);
 
 
-      if (presentMoviesNumber >= sortedCards.length) {
+      if (presentMoviesNumber >= this._cards.length) {
         this._showMoreButton.getElement().remove();
         presentMoviesNumber = INITIAL_MOVIES_NUMBER;
       }

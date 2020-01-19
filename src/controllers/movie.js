@@ -4,8 +4,9 @@ import ExtraMovieDetails from '../components/extra-movie-details';
 import {render} from '../utils/render';
 
 export default class MovieController {
-  constructor(container) {
+  constructor(container, onDataChange) {
     this._container = container;
+    this._onDataChange = onDataChange;
   }
 
   renderCard(card) {
@@ -42,6 +43,42 @@ export default class MovieController {
     const closeCardPopupButton = cardItemWithExtraDetails.getElement().querySelector(`.film-details__close-btn`);
     closeCardPopupButton.addEventListener(`click`, () => {
       cardItemWithExtraDetails.getElement().remove();
+    });
+
+    cardItem.setAddToWatchlistButtonClickHandler(() => {
+      this._onDataChange(this, card, Object.assign({}, card, {
+        isWatched: !card.isWatched,
+      }));
+    });
+
+    cardItem.setAddToWatchedListButtonClickHandler(() => {
+      this._onDataChange(this, card, Object.assign({}, card, {
+        isInWatchlist: !card.isInWatchlist,
+      }));
+    });
+
+    cardItem.setAddToFavoiriteListButtonClickHandler(() => {
+      this._onDataChange(this, card, Object.assign({}, card, {
+        isFavourite: !card.isFavourite,
+      }));
+    });
+
+    cardItemWithExtraDetails.setAddToWatchlistButtonClickHandler(() => {
+      this._onDataChange(this, card, Object.assign({}, card, {
+        isWatched: !card.isWatched,
+      }));
+    });
+
+    cardItemWithExtraDetails.setAddToWatchedListButtonClickHandler(() => {
+      this._onDataChange(this, card, Object.assign({}, card, {
+        isInWatchlist: !card.isInWatchlist,
+      }));
+    });
+
+    cardItemWithExtraDetails.setAddToFavoiriteListButtonClickHandler(() => {
+      this._onDataChange(this, card, Object.assign({}, card, {
+        isFavourite: !card.isFavourite,
+      }));
     });
 
     render(this._container, cardItem.getElement());
