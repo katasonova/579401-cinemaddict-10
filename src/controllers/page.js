@@ -6,7 +6,6 @@ import SnowMoreButton from '../components/show-more-button';
 import MovieList from '../components/extra-movie-list';
 import MovieController from '../controllers/movie';
 
-
 const INITIAL_MOVIES_NUMBER = 5;
 const MOVIES_TO_LOAD_MORE = 5;
 
@@ -19,6 +18,7 @@ export default class PageController {
     this._showMoreButton = new SnowMoreButton();
     this._showedMovieControllers = [];
     this._cards = [];
+    this._onDataChange = this._onDataChange.bind(this);
   }
 
   _onDataChange(movieController, oldCard, newChangedDataCard) {
@@ -30,7 +30,7 @@ export default class PageController {
 
     this._cards = [].concat(this._cards.slice(0, index), newChangedDataCard, this._cards.slice(index + 1));
 
-    movieController.render(this._cards[index]);
+    movieController.renderCard(this._cards[index]);
   }
 
   renderCards(container, array) {
