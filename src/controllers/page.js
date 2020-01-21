@@ -33,9 +33,9 @@ export default class PageController {
     movieController.renderCard(this._cards[index]);
   }
 
-  renderCards(container, array) {
+  renderCards(container, array, _onDataChange) {
     return array.map((card) => {
-      const movieController = new MovieController(container, this._onDataChange);
+      const movieController = new MovieController(container, _onDataChange);
       movieController.renderCard(card);
       return movieController;
     });
@@ -69,14 +69,14 @@ export default class PageController {
           this._cards = cards.slice();
           break;
       }
-      const newCards = this.renderCards(moviesContainerElement, this._cards.slice(0, INITIAL_MOVIES_NUMBER));
+      const newCards = this.renderCards(moviesContainerElement, this._cards.slice(0, INITIAL_MOVIES_NUMBER), this._onDataChange);
       this._showedMovieControllers = this._showedMovieControllers.concat(newCards);
 
       render(moviesListSection, this._showMoreButton.getElement());
     };
     this._sort.setSortingTypeClickHandler(sortHandler);
 
-    this._showedMovieControllers.concat(this.renderCards(moviesContainerElement, this._cards.slice(0, INITIAL_MOVIES_NUMBER)));
+    this._showedMovieControllers.concat(this.renderCards(moviesContainerElement, this._cards.slice(0, INITIAL_MOVIES_NUMBER)), this._onDataChange);
 
     const moviesListSection = container.querySelector(`.films-list`);
     render(moviesListSection, this._showMoreButton.getElement());
@@ -98,15 +98,15 @@ export default class PageController {
     const topCommentedMovies = getTopCommentedMovies(this._cards);
 
     const movieLists = container.querySelectorAll(`.films-list--extra .films-list__container`);
-    this.renderCards(movieLists[0], topRatedMovies);
-    this.renderCards(movieLists[1], topCommentedMovies);
+    this.renderCards(movieLists[0], topRatedMovies, this._onDataChange);
+    this.renderCards(movieLists[1], topCommentedMovies, this._onDataChange);
 
     let presentMoviesNumber = INITIAL_MOVIES_NUMBER;
     const showMoreButtonClickHandler = () => {
       const renderedMovies = presentMoviesNumber;
       presentMoviesNumber += MOVIES_TO_LOAD_MORE;
 
-      const newCards = this.renderCards(moviesContainerElement, this._cards.slice(renderedMovies, presentMoviesNumber));
+      const newCards = this.renderCards(moviesContainerElement, this._cards.slice(renderedMovies, presentMoviesNumber), this._onDataChange);
       this._showedMovieControllers = this._showedMovieControllers.concat(newCards);
 
 

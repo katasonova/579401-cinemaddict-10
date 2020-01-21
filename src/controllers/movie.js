@@ -1,16 +1,18 @@
 import {isEscWasPressed} from '../utils/common';
 import Card from '../components/movie-card';
 import ExtraMovieDetails from '../components/extra-movie-details';
-import {render} from '../utils/render';
+import {render, replace} from '../utils/render';
 
 export default class MovieController {
   constructor(container, onDataChange) {
     this._container = container;
     this._onDataChange = onDataChange;
+    this._cardItem = null;
   }
 
   renderCard(card) {
-    const cardItem = new Card(card);
+    const oldCard = this._cardItem;
+    this._cardItem  = new Card(card);
     const cardItemWithExtraDetails = new ExtraMovieDetails(card);
 
     const openMovieCardPopupHander = (openedCard) => {
@@ -25,17 +27,17 @@ export default class MovieController {
       });
     };
 
-    cardItem.setCardTitleClickHandler(() => {
+    this._cardItem.setCardTitleClickHandler(() => {
       openMovieCardPopupHander(cardItemWithExtraDetails);
       document.addEventListener(`keydown`, (evt) => closeMovieCardPopupHandler(evt, cardItemWithExtraDetails));
     });
 
-    cardItem.setCardPosterClickHandler(() => {
+    this._cardItem.setCardPosterClickHandler(() => {
       openMovieCardPopupHander(cardItemWithExtraDetails);
       document.addEventListener(`keydown`, (evt) => closeMovieCardPopupHandler(evt, cardItemWithExtraDetails));
     });
 
-    cardItem.setCardCommentsClickHandler(() => {
+    this._cardItem.setCardCommentsClickHandler(() => {
       openMovieCardPopupHander(cardItemWithExtraDetails);
       document.addEventListener(`keydown`, (evt) => closeMovieCardPopupHandler(evt, cardItemWithExtraDetails));
     });
@@ -45,21 +47,21 @@ export default class MovieController {
       cardItemWithExtraDetails.getElement().remove();
     });
 
-    cardItem.setAddToWatchlistButtonClickHandler((evt) => {
-      evt.preventDefault();
-      this._onDataChange(this, card, Object.assign({}, card, {
-        isWatched: !card.isWatched,
-      }));
-    });
-
-    cardItem.setAddToWatchedListButtonClickHandler((evt) => {
+    this._cardItem.setAddToWatchlistButtonClickHandler((evt) => {
       evt.preventDefault();
       this._onDataChange(this, card, Object.assign({}, card, {
         isInWatchlist: !card.isInWatchlist,
       }));
     });
 
-    cardItem.setAddToFavoiriteListButtonClickHandler((evt) => {
+    this._cardItem.setAddToWatchedListButtonClickHandler((evt) => {
+      evt.preventDefault();
+      this._onDataChange(this, card, Object.assign({}, card, {
+        isWatched: !card.isWatched,
+      }));
+    });
+
+    this._cardItem.setAddToFavoiriteListButtonClickHandler((evt) => {
       evt.preventDefault();
       this._onDataChange(this, card, Object.assign({}, card, {
         isFavourite: !card.isFavourite,
@@ -84,6 +86,10 @@ export default class MovieController {
       }));
     });
 
-    render(this._container, cardItem.getElement());
+    if (oldCard) {
+      replace(this._cardItem, oldCard);
+    } else {
+      render(this._container, this._cardItem.getElement());
+    }
   }
 }
