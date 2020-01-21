@@ -76,7 +76,7 @@ export default class PageController {
     };
     this._sort.setSortingTypeClickHandler(sortHandler);
 
-    this._showedMovieControllers.concat(this.renderCards(moviesContainerElement, this._cards.slice(0, INITIAL_MOVIES_NUMBER)), this._onDataChange);
+    this._showedMovieControllers.concat(this.renderCards(moviesContainerElement, this._cards.slice(0, INITIAL_MOVIES_NUMBER), this._onDataChange));
 
     const moviesListSection = container.querySelector(`.films-list`);
     render(moviesListSection, this._showMoreButton.getElement());

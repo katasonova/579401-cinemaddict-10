@@ -12,7 +12,7 @@ export default class MovieController {
 
   renderCard(card) {
     const oldCard = this._cardItem;
-    this._cardItem  = new Card(card);
+    this._cardItem = new Card(card);
     const cardItemWithExtraDetails = new ExtraMovieDetails(card);
 
     const openMovieCardPopupHander = (openedCard) => {
@@ -68,23 +68,23 @@ export default class MovieController {
       }));
     });
 
-    cardItemWithExtraDetails.setAddToWatchlistButtonClickHandler(() => {
-      this._onDataChange(this, card, Object.assign({}, card, {
-        isWatched: !card.isWatched,
-      }));
-    });
+    // cardItemWithExtraDetails.setAddToWatchlistButtonClickHandler(() => {
+    //   this._onDataChange(this, card, Object.assign({}, card, {
+    //     isWatched: !card.isWatched,
+    //   }));
+    // });
 
-    cardItemWithExtraDetails.setAddToWatchedListButtonClickHandler(() => {
-      this._onDataChange(this, card, Object.assign({}, card, {
-        isInWatchlist: !card.isInWatchlist,
-      }));
-    });
+    // cardItemWithExtraDetails.setAddToWatchedListButtonClickHandler(() => {
+    //   this._onDataChange(this, card, Object.assign({}, card, {
+    //     isInWatchlist: !card.isInWatchlist,
+    //   }));
+    // });
 
-    cardItemWithExtraDetails.setAddToFavoiriteListButtonClickHandler(() => {
-      this._onDataChange(this, card, Object.assign({}, card, {
-        isFavourite: !card.isFavourite,
-      }));
-    });
+    // cardItemWithExtraDetails.setAddToFavoiriteListButtonClickHandler(() => {
+    //   this._onDataChange(this, card, Object.assign({}, card, {
+    //     isFavourite: !card.isFavourite,
+    //   }));
+    // });
 
     if (oldCard) {
       replace(this._cardItem, oldCard);

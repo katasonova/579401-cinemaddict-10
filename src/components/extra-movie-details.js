@@ -188,15 +188,15 @@ export default class ExtraMovieDetails extends AbstractSmartComponent {
     });
   }
 
-  setAddToWatchlistButtonClickHandler(handler) {
-    this.getElement().querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, handler);
-  }
+  // setAddToWatchlistButtonClickHandler(handler) {
+  //   this.getElement().querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, handler);
+  // }
 
-  setAddToWatchedListButtonClickHandler(handler) {
-    this.getElement().querySelector(`.film-details__control-label--watched`).addEventListener(`click`, handler);
-  }
+  // setAddToWatchedListButtonClickHandler(handler) {
+  //   this.getElement().querySelector(`.film-details__control-label--watched`).addEventListener(`click`, handler);
+  // }
 
-  setAddToFavoiriteListButtonClickHandler(handler) {
-    this.getElement().querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, handler);
-  }
+  // setAddToFavoiriteListButtonClickHandler(handler) {
+  //   this.getElement().querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, handler);
+  // }
 }
