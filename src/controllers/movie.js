@@ -45,19 +45,22 @@ export default class MovieController {
       cardItemWithExtraDetails.getElement().remove();
     });
 
-    cardItem.setAddToWatchlistButtonClickHandler(() => {
+    cardItem.setAddToWatchlistButtonClickHandler((evt) => {
+      evt.preventDefault();
       this._onDataChange(this, card, Object.assign({}, card, {
         isWatched: !card.isWatched,
       }));
     });
 
-    cardItem.setAddToWatchedListButtonClickHandler(() => {
+    cardItem.setAddToWatchedListButtonClickHandler((evt) => {
+      evt.preventDefault();
       this._onDataChange(this, card, Object.assign({}, card, {
         isInWatchlist: !card.isInWatchlist,
       }));
     });
 
-    cardItem.setAddToFavoiriteListButtonClickHandler(() => {
+    cardItem.setAddToFavoiriteListButtonClickHandler((evt) => {
+      evt.preventDefault();
       this._onDataChange(this, card, Object.assign({}, card, {
         isFavourite: !card.isFavourite,
       }));
