@@ -3,48 +3,70 @@ import Card from '../components/movie-card';
 import ExtraMovieDetails from '../components/extra-movie-details';
 import {render, replace} from '../utils/render';
 
+const Mode = {
+  DEFAULT: `default`,
+  POPOVER: `popover`,
+};
+
 export default class MovieController {
-  constructor(container, onDataChange) {
+  constructor(container, onDataChange, onViewChange) {
     this._container = container;
     this._onDataChange = onDataChange;
     this._cardItem = null;
+    this._mode = Mode.DEFAULT;
+    this._onViewChange = onViewChange;
+    this._cardItemWithExtraDetails = null;
+  }
+
+  _closeMoviePopover() {
+    this._cardItemWithExtraDetails.getElement().remove();
+    this._mode = Mode.DEFAULT;
+  }
+
+  setDefaultView() {
+    if (this._mode !== Mode.DEFAULT) {
+      this._closeMoviePopover();
+    }
   }
 
   renderCard(card) {
     const oldCard = this._cardItem;
     this._cardItem = new Card(card);
-    const cardItemWithExtraDetails = new ExtraMovieDetails(card);
+    this._cardItemWithExtraDetails = new ExtraMovieDetails(card);
 
     const openMovieCardPopupHander = (openedCard) => {
       render(document.querySelector(`body`), openedCard.getElement());
+      this._mode = Mode.POPOVER;
     };
 
-    const closeMovieCardPopupHandler = (evt, element) => {
+    // loop?
+    this._closeMovieCardPopupHandler = (evt) => {
       isEscWasPressed(evt, () => {
-        element.getElement().remove();
-        element.removeElement();
-        document.removeEventListener(`keydown`, closeMovieCardPopupHandler);
+        // this._cardItemWithExtraDetails.getElement().remove();
+        this._closeMoviePopover();
+        this._cardItemWithExtraDetails.removeElement();
+        document.removeEventListener(`keydown`, this._closeMovieCardPopupHandler);
       });
     };
 
     this._cardItem.setCardTitleClickHandler(() => {
-      openMovieCardPopupHander(cardItemWithExtraDetails);
-      document.addEventListener(`keydown`, (evt) => closeMovieCardPopupHandler(evt, cardItemWithExtraDetails));
+      openMovieCardPopupHander(this._cardItemWithExtraDetails);
+      document.addEventListener(`keydown`, (evt) => this._closeMovieCardPopupHandler(evt));
     });
 
     this._cardItem.setCardPosterClickHandler(() => {
-      openMovieCardPopupHander(cardItemWithExtraDetails);
-      document.addEventListener(`keydown`, (evt) => closeMovieCardPopupHandler(evt, cardItemWithExtraDetails));
+      openMovieCardPopupHander(this._cardItemWithExtraDetails);
+      document.addEventListener(`keydown`, (evt) => this._closeMovieCardPopupHandler(evt));
     });
 
     this._cardItem.setCardCommentsClickHandler(() => {
-      openMovieCardPopupHander(cardItemWithExtraDetails);
-      document.addEventListener(`keydown`, (evt) => closeMovieCardPopupHandler(evt, cardItemWithExtraDetails));
+      openMovieCardPopupHander(this._cardItemWithExtraDetails);
+      document.addEventListener(`keydown`, (evt) => this._closeMovieCardPopupHandler(evt));
     });
 
-    const closeCardPopupButton = cardItemWithExtraDetails.getElement().querySelector(`.film-details__close-btn`);
+    const closeCardPopupButton = this._cardItemWithExtraDetails.getElement().querySelector(`.film-details__close-btn`);
     closeCardPopupButton.addEventListener(`click`, () => {
-      cardItemWithExtraDetails.getElement().remove();
+      this._cardItemWithExtraDetails.getElement().remove();
     });
 
     this._cardItem.setAddToWatchlistButtonClickHandler((evt) => {
@@ -67,24 +89,6 @@ export default class MovieController {
         isFavourite: !card.isFavourite,
       }));
     });
-
-    // cardItemWithExtraDetails.setAddToWatchlistButtonClickHandler(() => {
-    //   this._onDataChange(this, card, Object.assign({}, card, {
-    //     isWatched: !card.isWatched,
-    //   }));
-    // });
-
-    // cardItemWithExtraDetails.setAddToWatchedListButtonClickHandler(() => {
-    //   this._onDataChange(this, card, Object.assign({}, card, {
-    //     isInWatchlist: !card.isInWatchlist,
-    //   }));
-    // });
-
-    // cardItemWithExtraDetails.setAddToFavoiriteListButtonClickHandler(() => {
-    //   this._onDataChange(this, card, Object.assign({}, card, {
-    //     isFavourite: !card.isFavourite,
-    //   }));
-    // });
 
     if (oldCard) {
       replace(this._cardItem, oldCard);
