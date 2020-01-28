@@ -16,6 +16,8 @@ export default class MovieController {
     this._mode = Mode.DEFAULT;
     this._onViewChange = onViewChange;
     this._cardItemWithExtraDetails = null;
+    this._oldOpenedCard = null;
+    this.setDefaultView = this.setDefaultView.bind(this);
   }
 
   _closeMoviePopover() {
@@ -31,43 +33,34 @@ export default class MovieController {
 
   renderCard(card) {
     const oldCard = this._cardItem;
+    const oldOpenedCard = this._cardItemWithExtraDetails;
+
     this._cardItem = new Card(card);
     this._cardItemWithExtraDetails = new ExtraMovieDetails(card);
 
-    const openMovieCardPopupHander = (openedCard) => {
+    this._openMovieCardPopupHander = (openedCard) => {
       render(document.querySelector(`body`), openedCard.getElement());
+    };
+
+    this._openPopover = () => {
+      this._onViewChange();
+      this._openMovieCardPopupHander(this._cardItemWithExtraDetails);
+      document.addEventListener(`keydown`, (evt) => this._closeMovieCardPopupHandler(evt));
       this._mode = Mode.POPOVER;
     };
 
-    // loop?
     this._closeMovieCardPopupHandler = (evt) => {
       isEscWasPressed(evt, () => {
-        // this._cardItemWithExtraDetails.getElement().remove();
         this._closeMoviePopover();
-        this._cardItemWithExtraDetails.removeElement();
         document.removeEventListener(`keydown`, this._closeMovieCardPopupHandler);
       });
     };
 
-    this._cardItem.setCardTitleClickHandler(() => {
-      openMovieCardPopupHander(this._cardItemWithExtraDetails);
-      document.addEventListener(`keydown`, (evt) => this._closeMovieCardPopupHandler(evt));
-    });
+    this._cardItem.setCardTitleClickHandler(this._openPopover);
+    this._cardItem.setCardPosterClickHandler(this._openPopover);
+    this._cardItem.setCardCommentsClickHandler(this._openPopover);
 
-    this._cardItem.setCardPosterClickHandler(() => {
-      openMovieCardPopupHander(this._cardItemWithExtraDetails);
-      document.addEventListener(`keydown`, (evt) => this._closeMovieCardPopupHandler(evt));
-    });
-
-    this._cardItem.setCardCommentsClickHandler(() => {
-      openMovieCardPopupHander(this._cardItemWithExtraDetails);
-      document.addEventListener(`keydown`, (evt) => this._closeMovieCardPopupHandler(evt));
-    });
-
-    const closeCardPopupButton = this._cardItemWithExtraDetails.getElement().querySelector(`.film-details__close-btn`);
-    closeCardPopupButton.addEventListener(`click`, () => {
-      this._cardItemWithExtraDetails.getElement().remove();
-    });
+    this._cardItemWithExtraDetails.setCloseButtonClickHandler(() => this._closeMoviePopover());
 
     this._cardItem.setAddToWatchlistButtonClickHandler((evt) => {
       evt.preventDefault();
@@ -90,8 +83,30 @@ export default class MovieController {
       }));
     });
 
-    if (oldCard) {
+    this._cardItemWithExtraDetails.setAddToWatchlistButtonClickHandler((evt) => {
+      evt.preventDefault();
+      this._onDataChange(this, card, Object.assign({}, card, {
+        isInWatchlist: !card.isInWatchlist,
+      }));
+    });
+
+    this._cardItemWithExtraDetails.setAddToWatchedListButtonClickHandler((evt) => {
+      evt.preventDefault();
+      this._onDataChange(this, card, Object.assign({}, card, {
+        isWatched: !card.isWatched,
+      }));
+    });
+
+    this._cardItemWithExtraDetails.setAddToFavoiriteListButtonClickHandler((evt) => {
+      evt.preventDefault();
+      this._onDataChange(this, card, Object.assign({}, card, {
+        isFavourite: !card.isFavourite,
+      }));
+    });
+
+    if (oldCard && oldOpenedCard) {
       replace(this._cardItem, oldCard);
+      replace(this._cardItemWithExtraDetails, oldOpenedCard);
     } else {
       render(this._container, this._cardItem.getElement());
     }

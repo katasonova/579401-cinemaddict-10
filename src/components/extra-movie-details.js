@@ -115,7 +115,7 @@ const createExtraMovieDetailsTemplate = (card, options = {}) => {
                 <td class="film-details__cell">${card.country}</td>
               </tr>
               <tr class="film-details__row">
-                <td class="film-details__term">Genres</td>
+                <td class="film-details__term">${card.genres.length !== 1 ? `Genres` : `Genre`}</td>
                 <td class="film-details__cell">
                 ${renderGenres(card.genres)}
               </tr>
@@ -151,6 +151,8 @@ export default class ExtraMovieDetails extends AbstractSmartComponent {
     this._isInWatchlist = !!card.isInWatchlist;
     this._isWatched = !!card.isWatched;
     this._isFavourite = !!card.isFavourite;
+
+    this._subscribeOnEvents();
   }
 
   recoveryListeners() {
@@ -164,20 +166,39 @@ export default class ExtraMovieDetails extends AbstractSmartComponent {
   _subscribeOnEvents() {
     const element = this.getElement();
 
+    element.querySelector(`.film-details__close-btn`).addEventListener(`click`, () => {
+      element.remove();
+    });
+
     element.querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, () => {
       this._isInWatchlist = !this._isInWatchlist;
+
       this.rerender();
     });
 
     element.querySelector(`.film-details__control-label--watched`).addEventListener(`click`, () => {
       this._isWatched = !this._isWatched;
+
       this.rerender();
     });
 
     element.querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, () => {
-      this._isWatched = !this._isWatched;
+      this._isFavourite = !this._isFavourite;
+
       this.rerender();
     });
+  }
+
+  setAddToWatchlistButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, handler);
+  }
+
+  setAddToWatchedListButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__control-label--watched`).addEventListener(`click`, handler);
+  }
+
+  setAddToFavoiriteListButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, handler);
   }
 
   getTemplate() {
@@ -188,15 +209,7 @@ export default class ExtraMovieDetails extends AbstractSmartComponent {
     });
   }
 
-  // setAddToWatchlistButtonClickHandler(handler) {
-  //   this.getElement().querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, handler);
-  // }
-
-  // setAddToWatchedListButtonClickHandler(handler) {
-  //   this.getElement().querySelector(`.film-details__control-label--watched`).addEventListener(`click`, handler);
-  // }
-
-  // setAddToFavoiriteListButtonClickHandler(handler) {
-  //   this.getElement().querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, handler);
-  // }
+  setCloseButtonClickHandler(handler) {
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
+  }
 }
