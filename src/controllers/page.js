@@ -31,18 +31,20 @@ export default class PageController {
     }
 
     this._cards = [].concat(this._cards.slice(0, index), newChangedDataCard, this._cards.slice(index + 1));
+    this._onViewChange();
     movieController.renderCard(this._cards[index]);
   }
 
   _onViewChange() {
-    this._showedMovieControllers.forEach((it) => it.setDefaultView());
+    this._showedMovieControllers.forEach((movieController) => movieController());
   }
 
   renderCards(container, array, _onDataChange, _onViewChange) {
     return array.map((card) => {
       const movieController = new MovieController(container, _onDataChange, _onViewChange);
+      this._showedMovieControllers.push(movieController.setDefaultView);
       movieController.renderCard(card);
-      return movieController;
+      return this._showedMovieControllers;
     });
   }
 
