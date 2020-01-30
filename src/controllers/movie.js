@@ -83,22 +83,19 @@ export default class MovieController {
       }));
     });
 
-    this._cardItemWithExtraDetails.setAddToWatchlistButtonClickHandler((evt) => {
-      evt.preventDefault();
+    this._cardItemWithExtraDetails.setAddToWatchlistButtonClickHandler(() => {
       this._onDataChange(this, card, Object.assign({}, card, {
         isInWatchlist: !card.isInWatchlist,
       }));
     });
 
-    this._cardItemWithExtraDetails.setAddToWatchedListButtonClickHandler((evt) => {
-      evt.preventDefault();
+    this._cardItemWithExtraDetails.setAddToWatchedListButtonClickHandler(() => {
       this._onDataChange(this, card, Object.assign({}, card, {
         isWatched: !card.isWatched,
       }));
     });
 
-    this._cardItemWithExtraDetails.setAddToFavoiriteListButtonClickHandler((evt) => {
-      evt.preventDefault();
+    this._cardItemWithExtraDetails.setAddToFavoiriteListButtonClickHandler(() => {
       this._onDataChange(this, card, Object.assign({}, card, {
         isFavourite: !card.isFavourite,
       }));

@@ -36,15 +36,15 @@ export default class PageController {
   }
 
   _onViewChange() {
-    this._showedMovieControllers.forEach((movieController) => movieController());
+    this._subscriptions.forEach((movieControllerView) => movieControllerView());
   }
 
   renderCards(container, array, _onDataChange, _onViewChange) {
     return array.map((card) => {
       const movieController = new MovieController(container, _onDataChange, _onViewChange);
-      this._showedMovieControllers.push(movieController.setDefaultView);
+      this._subscriptions.push(movieController.setDefaultView);
       movieController.renderCard(card);
-      return this._showedMovieControllers;
+      return this._subscriptions;
     });
   }
 

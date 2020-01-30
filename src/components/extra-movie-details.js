@@ -167,38 +167,35 @@ export default class ExtraMovieDetails extends AbstractSmartComponent {
     const element = this.getElement();
 
     element.querySelector(`.film-details__close-btn`).addEventListener(`click`, () => {
+      if (this._closePopupButtonClickHandler) {
+        this._closePopupButtonClickHandler();
+      }
       element.remove();
     });
 
     element.querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, () => {
       this._isInWatchlist = !this._isInWatchlist;
-
+      if (this._isInWatchlistClickHandler) {
+        this._isInWatchlistClickHandler();
+      }
       this.rerender();
     });
 
     element.querySelector(`.film-details__control-label--watched`).addEventListener(`click`, () => {
       this._isWatched = !this._isWatched;
-
+      if (this._isToWatchedListClickHandler) {
+        this._isToWatchedListClickHandler();
+      }
       this.rerender();
     });
 
     element.querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, () => {
       this._isFavourite = !this._isFavourite;
-
+      if (this._isFavouriteClickHandler) {
+        this._isToWatchedListClickHandler();
+      }
       this.rerender();
     });
-  }
-
-  setAddToWatchlistButtonClickHandler(handler) {
-    this.getElement().querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, handler);
-  }
-
-  setAddToWatchedListButtonClickHandler(handler) {
-    this.getElement().querySelector(`.film-details__control-label--watched`).addEventListener(`click`, handler);
-  }
-
-  setAddToFavoiriteListButtonClickHandler(handler) {
-    this.getElement().querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, handler);
   }
 
   getTemplate() {
@@ -210,6 +207,18 @@ export default class ExtraMovieDetails extends AbstractSmartComponent {
   }
 
   setCloseButtonClickHandler(handler) {
-    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, handler);
+    this._closePopupButtonClickHandler = handler;
+  }
+
+  setAddToWatchlistButtonClickHandler(handler) {
+    this._isInWatchlistClickHandler = handler;
+  }
+
+  setAddToWatchedListButtonClickHandler(handler) {
+    this._isToWatchedListClickHandler = handler;
+  }
+
+  setAddToFavoiriteListButtonClickHandler(handler) {
+    this._isFavouriteClickHandler = handler;
   }
 }
