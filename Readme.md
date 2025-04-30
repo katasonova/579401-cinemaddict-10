@@ -42,19 +42,6 @@ Build the production version:
 npm run build
 ```
 
-## 📁 Project Structure
-bash
-Copy
-Edit
-src/
-├── components/        # Reusable UI components (views)
-├── controllers/       # Presenters managing logic and UI
-├── models/            # Application data models
-├── utils/             # Helper functions
-├── main.js            # App entry point
-webpack.config.js      # Webpack config
-.eslintrc.yml          # ESLint configuration
-
 ## 🧠 What I Learned
 Designing UI logic using MVP without libraries or frameworks
 
