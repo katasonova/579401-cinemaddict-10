@@ -1,52 +1,76 @@
-# Личный проект «Киноман» [![Build status][travis-image]][travis-url]
+# 🎬 Cinemaddict [![Build status][travis-image]][travis-url]
 
-* Студент: [Elena Katasonova](https://up.htmlacademy.ru/ecmascript/10/user/579401).
-* Наставник: [Oleg Petrov](https://htmlacademy.ru/profile/fyvfyv).
+A single-page movie tracking application built using vanilla JavaScript and following the MVP (Model–View–Presenter) architecture pattern.
 
----
-
-_Не удаляйте и не изменяйте папки и файлы:_
-_`.editorconfig`, `.gitattributes`, `.gitignore`, `.travis.yml`, `package.json`._
+This project was developed as part of the HTML Academy JS2 course and demonstrates clean separation of logic and presentation, dynamic DOM manipulation, and modular JS practices.
 
 ---
 
-### Памятка
+## 🔍 Features
 
-#### 1. Зарегистрируйтесь на Гитхабе
+- Component-based architecture using **MVP pattern**
+- Dynamic rendering of movie cards and details
+- Sorting and filtering logic for movie lists
+- Manual state and DOM updates without frameworks
+- Built and served using **Webpack**
+- Linting with ESLint and HTML Academy standards
 
-Если у вас ещё нет аккаунта на [github.com](https://github.com/join), скорее зарегистрируйтесь.
+---
 
-#### 2. Создайте форк
+## 📦 Stack
 
-Откройте репозиторий и нажмите кнопку «Fork» в правом верхнем углу. Репозиторий из Академии будет скопирован в ваш аккаунт.
+- **JavaScript (ES6+)**
+- **Webpack**
+- **ESLint**
+- HTML, CSS (based on provided mockups)
 
-<img width="769" alt="Press 'Fork'" src="https://cloud.githubusercontent.com/assets/259739/20264045/a1ddbf40-aa7a-11e6-9a1a-724a1c0123c8.png">
+---
 
-Получится вот так:
+## 🚀 Getting Started
 
-<img width="769" alt="Forked" src="https://cloud.githubusercontent.com/assets/259739/20264122/f63219a6-aa7a-11e6-945a-89818fc7c014.png">
-
-#### 3. Клонируйте репозиторий на свой компьютер
-
-Будьте внимательны: нужно клонировать свой репозиторий (форк), а не репозиторий Академии. Также обратите внимание, что клонировать репозиторий нужно через SSH, а не через HTTPS. Нажмите зелёную кнопку в правой части экрана, чтобы скопировать SSH-адрес вашего репозитория:
-
-<img width="769" alt="SSH" src="https://cloud.githubusercontent.com/assets/259739/20264180/42704126-aa7b-11e6-9ab4-73372b812a53.png">
-
-Клонировать репозиторий можно так:
-
-```
-git clone SSH-адрес_вашего_форка
+```bash
+npm install
 ```
 
-Команда клонирует репозиторий на ваш компьютер и подготовит всё необходимое для старта работы.
+Run development server (for Node 17+ compatibility):
+```bash
+NODE_OPTIONS=--openssl-legacy-provider npm start 
+```
 
-#### 4. Начинайте обучение!
+Build the production version:
+```bash
+npm run build
+```
 
----
+## 📁 Project Structure
+bash
+Copy
+Edit
+src/
+├── components/        # Reusable UI components (views)
+├── controllers/       # Presenters managing logic and UI
+├── models/            # Application data models
+├── utils/             # Helper functions
+├── main.js            # App entry point
+webpack.config.js      # Webpack config
+.eslintrc.yml          # ESLint configuration
 
-<a href="https://htmlacademy.ru/intensive/ecmascript"><img align="left" width="50" height="50" title="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/ecmascript/logo-for-github.svg"></a>
+## 🧠 What I Learned
+Designing UI logic using MVP without libraries or frameworks
 
-Репозиторий создан для обучения на интенсивном онлайн‑курсе «[Профессиональный JavaScript, уровень 2](https://htmlacademy.ru/intensive/ecmascript)» от [HTML Academy](https://htmlacademy.ru).
+Managing application state and user interaction manually
 
-[travis-image]: https://travis-ci.com/htmlacademy-ecmascript/579401-cinemaddict-10.svg?branch=master
-[travis-url]: https://travis-ci.com/htmlacademy-ecmascript/579401-cinemaddict-10
+Working with modular JavaScript, separating concerns
+
+Setting up a full build system with Webpack
+
+Applying linting and code quality tools in a real project
+
+## 🛠️ Possible Improvements
+Refactor repeated logic into smaller utilities
+
+Migrate to a framework (React/Vue) for maintainability
+
+## 📌 Status
+🟢 Complete (educational project)
+This project is no longer actively developed but remains a good example of structured vanilla JS architecture.
