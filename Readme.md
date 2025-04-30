@@ -1,4 +1,4 @@
-# 🎬 Cinemaddict  [![Build status][travis-image]][travis-url]
+# 🎬 Cinemaddict
 
 A single-page movie tracking application built using vanilla JavaScript and following the MVP (Model–View–Presenter) architecture pattern.
 
